@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div className="Login">
+        <form action="{% url 'join' %}" method="post" class="LoginForm">
+            {% csrf_token %}
+            {{app}}
+            <h2>Login</h2>
+            <div class="idForm">
+                <input type="text" name="username" class="id" placeholder="ID" />
+            </div>
+            <div class="passForm">
+                <input type="password" name="password" class="pw" placeholder="PW" />
+            </div>
+            <input type='submit' value='회원가입' />
+        </form>
+    </div>
+</body>
+</html>
