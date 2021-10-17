@@ -40,14 +40,16 @@
         {% for data in contents %}
         <tr>
           <td>{{data.username}}</td>
-          <td><a href="/update/{{data.id}}">{{data.title}}</a></td>
-          <td><a href="{% url 'delete' pk=data.id %}">delete</a></td>
+          <td><a href="/image2/{{data.id}}">{{data.title}}</a></td>
+          <td><a href="{% url 'delete_image' pk=data.id %}">delete</a></td>
+          <td>{{data.images}}</td>
           <td>
-            <form method="post" action="{% url 'delete' pk=data.id %}" >
+            <form method="post" action="{% url 'delete_image' pk=data.id %}" >
               {% csrf_token %}
               <button>삭제하기</button>
             </form>
           </td>
+          <td>{{data.id}}</td>
         </tr>
         {% endfor %}
       </table>

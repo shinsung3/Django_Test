@@ -22,4 +22,7 @@ urlpatterns = [
     path('join/', views.join, name='join'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    path('write/', views.write, name="write"),
+    path('update/<int:pk>', views.update, name="update"),
+    path('delete/<int:pk>', views.delete, name="delete"),
 ]

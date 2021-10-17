@@ -6,7 +6,7 @@
 </head>
 <body>
     <div className="Writer">
-        <form action="{% url 'write' %}" method="post" class="WriteForm">
+        <form action="{% url 'image' %}" method="post" class="WriteForm" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="topic">
                 <input type="text" name="title" placeholder="제목" />
@@ -14,6 +14,10 @@
             <h2>작성자 : {{user}}</h2>
             <div class="content">
                 <input type="textarea" name="board" placeholder="내용을 입력하세요" style="width:500px; height:500px;" />
+            </div>
+            <div>
+                <h4>사진: </h4>
+	            <input type="file" name="images" accept="image/*">
             </div>
             <div class="submit">
                 <input type="submit" value="submit" />

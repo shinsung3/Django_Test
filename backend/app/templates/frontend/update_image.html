@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div className="Writer">
+        <form action="{% url 'image2' pk=contents.pk %}" method="post" class="WriteForm">
+            {% csrf_token %}
+            <div class="topic">
+                <input type="text" name="title" placeholder="제목" value="{{contents.title}}"/>
+            </div>
+            <h2>작성자 : {{contents.username}}</h2>
+            <div class="content">
+                <input type="textarea" name="board" placeholder="내용을 입력하세요" value="{{contents.content}}" style="width:500px; height:500px;" />
+            </div>
+            {% if contents.images %}
+            <div>
+                <img src="{{ contents.images.url }}" width="500" height="500">
+            </div>
+            {% endif %}
+            <div class="submit">
+                <input type="submit" value="submit" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>

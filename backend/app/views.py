@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from .models import Notice, Notice2
 
 # Create your views here.
 def join(request):
@@ -14,7 +15,8 @@ def join(request):
         return render(request, 'frontend/join.html', {'app':"안녕"})
 
 def home(request):
-    return render(request, 'frontend/notice.html')
+    contents = Notice.objects.filter()
+    return render(request, 'frontend/notice.html', {'contents':contents})
 
 def login(request):
     if request.method=="POST":
@@ -36,3 +38,30 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+def write(request):
+    if request.method == "POST":
+        t = request.POST["title"]
+        c = request.POST["board"]
+        u = request.user
+        print(u)
+        Notice.objects.create(title=t, content=c, username=u.username)
+        return redirect("/")
+    else:
+        u = request.user
+        return render(request, 'frontend/writer.html', {'user':u})
+
+def update(request, pk):
+    contents = get_object_or_404(Notice, pk=pk)
+    if request.method == "POST":
+        contents.title = request.POST["title"]
+        contents.content = request.POST["board"]
+        contents.save()
+        return redirect("/")
+    else:
+        return render(request, 'frontend/update.html', {'contents':contents})
+
+def delete(request, pk):
+    if request.method == "POST":
+        Notice.objects.get(pk=pk).delete()
+        return redirect("/")

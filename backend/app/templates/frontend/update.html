@@ -6,14 +6,14 @@
 </head>
 <body>
     <div className="Writer">
-        <form action="{% url 'write' %}" method="post" class="WriteForm">
+        <form action="{% url 'update' pk=contents.pk %}" method="post" class="WriteForm">
             {% csrf_token %}
             <div class="topic">
-                <input type="text" name="title" placeholder="제목" />
+                <input type="text" name="title" placeholder="제목" value="{{contents.title}}"/>
             </div>
-            <h2>작성자 : {{user}}</h2>
+            <h2>작성자 : {{contents.username}}</h2>
             <div class="content">
-                <input type="textarea" name="board" placeholder="내용을 입력하세요" style="width:500px; height:500px;" />
+                <input type="textarea" name="board" placeholder="내용을 입력하세요" value="{{contents.content}}" style="width:500px; height:500px;" />
             </div>
             <div class="submit">
                 <input type="submit" value="submit" />
