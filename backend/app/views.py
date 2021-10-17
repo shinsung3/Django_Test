@@ -1,7 +1,8 @@
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Notice, Notice2
+from .models import Notice
 
 # Create your views here.
 def join(request):
@@ -16,9 +17,15 @@ def join(request):
 
 def home(request):
     contents = Notice.objects.filter()
+    # user_id = request.session.get("user")
+    # if user_id:
+    #     user = User.objects.get(pk=user_id)
+    #     return HttpResponse(f'{user} login success')
     return render(request, 'frontend/notice.html', {'contents':contents})
 
 def login(request):
+    u = request.user
+    print(u)
     if request.method=="POST":
         name = request.POST['username']
         pw = request.POST['password']
@@ -33,7 +40,22 @@ def login(request):
             auth.login(request, user) #로그인 -> 마이페이지
             return redirect("/")
     else:
-        return render(request, 'frontend/login.html')
+        if str(u) == "AnonymousUser":
+            print(str(u))
+            return render(request, 'frontend/login.html')
+        else:
+            message = "로그인 할 수 없습니다."
+            return home2(request, message)
+        # return redirect("/")
+
+def home2(request, message):
+    print(message)
+    contents = Notice.objects.filter()
+    # user_id = request.session.get("user")
+    # if user_id:
+    #     user = User.objects.get(pk=user_id)
+    #     return HttpResponse(f'{user} login success')
+    return render(request, 'frontend/notice.html', {'contents':contents, 'message':message})
 
 def logout(request):
     auth.logout(request)
